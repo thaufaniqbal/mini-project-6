@@ -21,7 +21,7 @@ public class CustomerBio {
     private String customerName;
     private String customerGender;
     private String customerAddress;
-    private Long customerNo;
-    private LocalDate customerBirthDate;
+    private Long customerNumber;
+    private LocalDate customerBird;
     private Long idCardNumber;
 }
