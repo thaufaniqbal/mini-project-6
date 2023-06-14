@@ -21,6 +21,7 @@ public class CustomerBio {
     private String customerName;
     private String customerGender;
     private String customerAddress;
+    private String smooking;
     private Long customerNumber;
     private LocalDate customerBirthDate;
     private Long idCardNumber;
