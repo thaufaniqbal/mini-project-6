@@ -17,6 +17,7 @@ public class RoomStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
     private Room room;
     private Boolean roomStatus;
 }

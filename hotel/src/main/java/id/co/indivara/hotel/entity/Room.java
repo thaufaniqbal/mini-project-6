@@ -19,4 +19,6 @@ public class Room {
     private Long id;
     private Long roomNumber;
     private String roomType;
+    @OneToOne(mappedBy = "room")
+    private RoomStatus roomStatus;
 }
