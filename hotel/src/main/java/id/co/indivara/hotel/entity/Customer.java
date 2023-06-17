@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "customers_bio")
+@Table(name = "customers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
