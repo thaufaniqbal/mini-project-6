@@ -14,14 +14,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerBio {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String customerName;
     private String customerGender;
     private String customerAddress;
-    private Long customerNumber;
-    private LocalDate customerBirthhday;
-    private Long idCardNumber;
+    private String customerNumber;
+    private LocalDate customerBirthDate;
+    private String idCardNumber;
 }
