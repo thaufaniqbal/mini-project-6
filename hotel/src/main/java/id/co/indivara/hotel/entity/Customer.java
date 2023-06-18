@@ -1,5 +1,6 @@
 package id.co.indivara.hotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "mst_customers")
@@ -24,4 +26,12 @@ public class Customer {
     private String customerNumber;
     private LocalDate customerBirthDate;
     private String idCardNumber;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Reservation> reserveRooms;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Transaction> transactionList;
 }

@@ -1,5 +1,6 @@
 package id.co.indivara.hotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,10 @@ public class RoomStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @OneToOne
+    @JsonIgnore
     private Room room;
+
     private Boolean roomStatus;
 }
