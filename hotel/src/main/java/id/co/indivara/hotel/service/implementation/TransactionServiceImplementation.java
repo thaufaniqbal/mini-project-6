@@ -1,6 +1,8 @@
 package id.co.indivara.hotel.service.implementation;
 
+import id.co.indivara.hotel.model.CustomerValidationCheckIn;
 import id.co.indivara.hotel.model.ReserveRoomForm;
+import id.co.indivara.hotel.model.ReserveRoomReceipt;
 import id.co.indivara.hotel.model.entity.Customer;
 import id.co.indivara.hotel.model.entity.Reservation;
 import id.co.indivara.hotel.model.entity.Room;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -33,60 +34,90 @@ public class TransactionServiceImplementation implements TransactionService {
 
 
     @Override
-    public Boolean checkIn(Long roomNumber, Integer roomToken) {
-        Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalse(roomToken);
-        if (dateCheckInChecker(reservation.getCheckIn())){
-            if(roomNumber==reservation.getRoom().getRoomNumber()){
-                transactionRepository.save(Transaction.builder()
-                        .checkIn(LocalDate.now()).
-                        room(reservation.getRoom()).
-                        customer(reservation.getCustomer()).
-                        build());
-                reservation.setIsCheckIn(true);
-                reservationRepository.save(reservation);
-                return true;
-            }
+    public CustomerValidationCheckIn checkIn(Long roomNumber, Integer roomToken) {
+        Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndValidationCheckInFalse(roomToken);
+        if (dateCheckInChecker(reservation.getCheckIn()) && roomNumber.equals(reservation.getRoom().getRoomNumber())) {
+            reservation.setValidationCheckIn(true);
+            reservationRepository.save(reservation);
+            return new CustomerValidationCheckIn(reservation.getCustomer().getCustomerName(), "Check Notification");
+        }
+        return new CustomerValidationCheckIn(null, "Invalid check-in request");
+    }
+
+    @Override
+    public Boolean customerValidationCheckIn(Long customerId, Long roomNumber, Integer roomToken, Boolean isCheckIn) {
+        Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndValidationCheckInTrue(roomToken);
+        if (isCheckIn && customerId.equals(reservation.getCustomer().getId())) {
+            transactionRepository.save(Transaction.builder()
+                    .checkIn(LocalDate.now())
+                    .room(reservation.getRoom())
+                    .customer(reservation.getCustomer())
+                    .build());
+            reservation.setIsCheckIn(true);
+            reservationRepository.save(reservation);
+            return true;
         }
         return false;
     }
 
     @Override
     public void checkOut(Long roomId) {
-
+        // Implement the check-out functionality
     }
 
     @Override
-    public Boolean reserveRoom(ReserveRoomForm reserveRoomForm) {
+    public ReserveRoomReceipt reserveRoom(ReserveRoomForm reserveRoomForm) {
         Room room = roomRepository.findById(reserveRoomForm.getRoomId())
                 .orElseThrow(() -> new RuntimeException("Room not found"));
         Customer customer = customerRepository.findById(reserveRoomForm.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
-        int date = reserveRoomForm.getCheckInDate().getDayOfMonth();
-        Long roomNumber = room.getRoomNumber();
-        int token = Integer.parseInt(date + String.valueOf(roomNumber) + new Random().nextInt(50));
-        Optional<Reservation> existingReservation =
-                reservationRepository.findExistingReservationNative(
-                        room, reserveRoomForm.getCheckInDate(),
-                        reserveRoomForm.getCheckOutDate());
 
-        Reservation reservation = existingReservation.orElseGet(() -> {
-            Reservation newReservation = Reservation.builder()
-                    .room(room)
-                    .reservationDate(LocalDateTime.now())
-                    .checkIn(reserveRoomForm.getCheckInDate())
-                    .checkOut(reserveRoomForm.getCheckOutDate())
-                    .customer(customer)
-                    .roomToken(token)
-                    .isCheckIn(false)
+        Optional<Reservation> existingReservation = reservationRepository.findExistingReservationNative(
+                room, reserveRoomForm.getCheckInDate(), reserveRoomForm.getCheckOutDate());
+
+        if (existingReservation.isPresent()) {
+            return ReserveRoomReceipt.builder()
+                    .roomNumber(room.getRoomNumber())
+                    .roomToken(null)
+                    .systemMessage("Reservation Room: " + room.getRoomNumber() + ", Already exists for the specified dates: " +
+                            reserveRoomForm.getCheckInDate() +
+                            " - " + reserveRoomForm.getCheckOutDate())
                     .build();
-            return reservationRepository.save(newReservation);
-        });
+        }
 
-        return !existingReservation.isPresent();
+        int token = generateRoomToken(reserveRoomForm.getCheckInDate(), room.getRoomNumber());
+        Reservation reservation = createReservation(room, customer, reserveRoomForm.getCheckInDate(), reserveRoomForm.getCheckOutDate(), token);
+        reservationRepository.save(reservation);
+
+        return ReserveRoomReceipt.builder()
+                .roomNumber(room.getRoomNumber())
+                .roomToken(token)
+                .systemMessage("to: " + reservation.getCustomer().getCustomerName() +
+                        " Please keep this token secure, and perform check-in on the date specified: " +
+                        reservation.getCheckIn())
+                .build();
     }
 
-    public static Boolean dateCheckInChecker(LocalDate dateCheckIn){
-        return Objects.equals(dateCheckIn, LocalDate.now());
+    private Boolean dateCheckInChecker(LocalDate dateCheckIn) {
+        return dateCheckIn.equals(LocalDate.now());
     }
 
+    private int generateRoomToken(LocalDate checkInDate, Long roomNumber) {
+        int date = checkInDate.getDayOfMonth();
+        return Integer.parseInt(date + String.valueOf(roomNumber) + new Random().nextInt(50));
+    }
+
+    private Reservation createReservation(Room room, Customer customer, LocalDate checkInDate,
+                                          LocalDate checkOutDate, int roomToken) {
+        return Reservation.builder()
+                .room(room)
+                .reservationDate(LocalDateTime.now())
+                .checkIn(checkInDate)
+                .checkOut(checkOutDate)
+                .customer(customer)
+                .roomToken(roomToken)
+                .validationCheckIn(false)
+                .isCheckIn(false)
+                .build();
+    }
 }

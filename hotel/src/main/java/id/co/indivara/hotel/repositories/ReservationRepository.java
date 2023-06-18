@@ -20,6 +20,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("checkOutDate") LocalDate checkOutDate
     );
 
-    Reservation findByRoomTokenAndIsCheckInFalse(Integer roomToken);
+    Reservation findByRoomTokenAndIsCheckInFalseAndValidationCheckInFalse(Integer roomToken);
+    Reservation findByRoomTokenAndIsCheckInFalseAndValidationCheckInTrue(Integer roomToken);
 
 }

@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReserveRoomReceipt {
-    private Long roomNumber;
-    private Integer roomToken;
-    private String systemMessage;
+public class CustomerValidationCheckIn {
+    String customerName;
+    String message;
 }
