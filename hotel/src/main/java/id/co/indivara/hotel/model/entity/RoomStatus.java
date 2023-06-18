@@ -1,4 +1,4 @@
-package id.co.indivara.hotel.entity;
+package id.co.indivara.hotel.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

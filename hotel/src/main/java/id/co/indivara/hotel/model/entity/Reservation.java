@@ -1,4 +1,4 @@
-package id.co.indivara.hotel.entity;
+package id.co.indivara.hotel.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -29,8 +29,9 @@ public class Reservation {
     @JsonIgnore
     private Customer customer;
 
-    private LocalDateTime reservationDate = LocalDateTime.now();
+    private LocalDateTime reservationDate;
     private LocalDate checkIn;
     private LocalDate checkOut;
+    private Boolean isCheckIn;
     private Integer roomToken;
 }

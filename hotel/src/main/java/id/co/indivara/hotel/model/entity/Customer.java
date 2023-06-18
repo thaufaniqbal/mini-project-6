@@ -1,4 +1,4 @@
-package id.co.indivara.hotel.entity;
+package id.co.indivara.hotel.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class Customer {
     private String customerName;
     private String customerGender;
     private String customerAddress;
-    private String customerNumber;
+    private String customerPhoneNumber;
     private LocalDate customerBirthDate;
     private String idCardNumber;
 
