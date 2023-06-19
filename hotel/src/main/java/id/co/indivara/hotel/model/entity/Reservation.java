@@ -33,6 +33,10 @@ public class Reservation {
     private LocalDate checkIn;
     private LocalDate checkOut;
     private Boolean isCheckIn;
-    private Boolean validationCheckIn;
+    private Boolean checkInValidation;
     private Integer roomToken;
+
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Transaction transaction;
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -20,7 +21,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("checkOutDate") LocalDate checkOutDate
     );
 
-    Reservation findByRoomTokenAndIsCheckInFalseAndValidationCheckInFalse(Integer roomToken);
-    Reservation findByRoomTokenAndIsCheckInFalseAndValidationCheckInTrue(Integer roomToken);
+    @Query(value = "SELECT * FROM trx_reservations WHERE ((:checkInDate >= check_in AND :checkInDate <= check_out)"+
+            "OR (:checkOutDate >= check_in AND :checkOutDate <= check_out))", nativeQuery = true)
+    List<Reservation> findExistingReservationNative(
+            @Param("checkInDate") LocalDate checkInDate,
+            @Param("checkOutDate") LocalDate checkOutDate
+    );
+
+    Reservation findByRoomTokenAndIsCheckInFalseAndCheckInValidationFalse(Integer roomToken);
+    Reservation findByRoomTokenAndIsCheckInFalseAndCheckInValidationTrue(Integer roomToken);
+    Reservation findByRoomTokenAndIsCheckInTrueAndCheckInValidationTrue(Integer roomToken);
 
 }

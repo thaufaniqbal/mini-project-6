@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "trx_transaction")
@@ -28,7 +29,11 @@ public class Transaction {
     @JsonIgnore
     private Customer customer;
 
-    private LocalDate checkIn;
-    private LocalDate checkOut;
+    private LocalDateTime checkIn;
+    private LocalDateTime checkOut;
     private Boolean isCheckOut;
+
+    @OneToOne
+    @JsonIgnore
+    private Reservation reservation;
 }

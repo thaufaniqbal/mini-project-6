@@ -3,6 +3,7 @@ package id.co.indivara.hotel.controller;
 import id.co.indivara.hotel.model.CustomerValidationCheckIn;
 import id.co.indivara.hotel.model.ReserveRoomForm;
 import id.co.indivara.hotel.model.ReserveRoomReceipt;
+import id.co.indivara.hotel.model.Validation;
 import id.co.indivara.hotel.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,17 +30,19 @@ public class TransactionController {
         }
         return ResponseEntity.badRequest().build();
     }
-    @PostMapping("/checkin/{customerId}/{roomNumber}/{roomToken}/{isCheckIn}")
-    public ResponseEntity<?> customerValidationCheckIn(@PathVariable Long customerId,
-                                                       @PathVariable Long roomNumber,
-                                                       @PathVariable Integer roomToken,
-                                                       @PathVariable Boolean isCheckIn){
-        Boolean checkInResult = transactionService.customerValidationCheckIn( customerId,roomNumber, roomToken, isCheckIn);
-        if (checkInResult) {
-            return ResponseEntity.ok().body(checkInResult);
+    @PostMapping("/validation/")
+    public ResponseEntity<?> customerValidationCheckIn(@RequestBody Validation validation){
+        if (transactionService.customerValidationCheckIn(validation)) {
+            return ResponseEntity.ok().body(true);
         }
         return ResponseEntity.badRequest().build();
     }
-
+    @PutMapping("/checkout/{roomToken}")
+    public ResponseEntity<?> checkOut(@PathVariable Integer roomToken){
+        if (transactionService.checkOut(roomToken)) {
+            return ResponseEntity.ok().body(true);
+        }
+        return ResponseEntity.badRequest().build();
+    }
 
 }
