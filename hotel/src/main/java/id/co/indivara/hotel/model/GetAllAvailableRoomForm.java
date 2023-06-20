@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GetAllAvailableForm {
+public class GetAllAvailableRoomForm {
     LocalDate checkInDate;
     LocalDate checkOutDate;
 }
