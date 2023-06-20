@@ -20,15 +20,6 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @ManyToOne
-    @JsonIgnore
-    private Room room;
-
-    @ManyToOne
-    @JsonIgnore
-    private Customer customer;
-
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     private Boolean isCheckOut;

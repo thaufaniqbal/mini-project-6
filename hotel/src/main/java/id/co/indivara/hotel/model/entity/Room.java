@@ -29,8 +29,4 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Reservation> reservationList;
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Transaction> transactionList;
 }

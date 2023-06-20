@@ -1,12 +1,12 @@
-package id.co.indivara.hotel.service.implementation;
+package id.co.indivara.hotel.services.implementation;
 
-import id.co.indivara.hotel.model.CustomerValidationCheckIn;
+import id.co.indivara.hotel.model.CustomerCheckInMessage;
+import id.co.indivara.hotel.model.CustomerCheckInValidationForm;
 import id.co.indivara.hotel.model.ReserveRoomForm;
 import id.co.indivara.hotel.model.ReserveRoomReceipt;
-import id.co.indivara.hotel.model.Validation;
 import id.co.indivara.hotel.model.entity.*;
 import id.co.indivara.hotel.repositories.*;
-import id.co.indivara.hotel.service.TransactionService;
+import id.co.indivara.hotel.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,24 +31,26 @@ public class TransactionServiceImplementation implements TransactionService {
 
 
     @Override
-    public CustomerValidationCheckIn checkIn(Long roomNumber, Integer roomToken) {
+    public CustomerCheckInMessage checkIn(Long roomNumber, Integer roomToken) {
+        // find reservation by roomToken, isCheckIn = False, CheckInValidation = False
         Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndCheckInValidationFalse(roomToken);
+        // check date, if customer do checkIn, and is not match will return invalid checkIn request
         if (dateCheckInChecker(reservation.getCheckIn()) && roomNumber.equals(reservation.getRoom().getRoomNumber())) {
             reservation.setCheckInValidation(true);
             reservationRepository.save(reservation);
-            return new CustomerValidationCheckIn(reservation.getCustomer().getCustomerName(), "Check Notification");
+            return new CustomerCheckInMessage(reservation.getCustomer().getCustomerName(), "Check Notification");
         }
-        return new CustomerValidationCheckIn(null, "Invalid check-in request");
+        return new CustomerCheckInMessage(null, "Invalid check-in request");
     }
 
     @Override
-    public Boolean customerValidationCheckIn(Validation validation) {
-        Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndCheckInValidationTrue(validation.getRoomToken());
-        if (validation.getIsCheckIn() && validation.getCustomerId().equals(reservation.getCustomer().getId())) {
+    public Boolean customerCheckInValidation(CustomerCheckInValidationForm customerCheckInValidationForm) {
+        // find reservation by roomToken, isCheckIn = False, CheckInValidation = True
+        Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndCheckInValidationTrue(customerCheckInValidationForm.getRoomToken());
+        // check for customerCheckIn, if customer set "True" to customerCheckInValidationForm, and it will true. and save to transaction history
+        if (customerCheckInValidationForm.getIsCheckIn() && customerCheckInValidationForm.getCustomerId().equals(reservation.getCustomer().getId())) {
             transactionRepository.save(Transaction.builder()
                     .checkIn(LocalDateTime.now())
-                    .room(reservation.getRoom())
-                    .customer(reservation.getCustomer())
                     .reservation(reservation)
                     .build());
             reservation.setIsCheckIn(true);

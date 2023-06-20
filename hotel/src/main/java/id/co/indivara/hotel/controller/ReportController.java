@@ -2,7 +2,7 @@ package id.co.indivara.hotel.controller;
 
 import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
 import id.co.indivara.hotel.model.entity.Room;
-import id.co.indivara.hotel.service.ReportService;
+import id.co.indivara.hotel.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

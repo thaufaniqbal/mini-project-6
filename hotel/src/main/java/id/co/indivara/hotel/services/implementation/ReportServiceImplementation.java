@@ -1,11 +1,11 @@
-package id.co.indivara.hotel.service.implementation;
+package id.co.indivara.hotel.services.implementation;
 
 import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
 import id.co.indivara.hotel.model.entity.Reservation;
 import id.co.indivara.hotel.model.entity.Room;
 import id.co.indivara.hotel.model.entity.Transaction;
 import id.co.indivara.hotel.repositories.*;
-import id.co.indivara.hotel.service.ReportService;
+import id.co.indivara.hotel.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,6 @@ public class ReportServiceImplementation implements ReportService {
             checkInDate = LocalDate.now();
             checkOutDate = LocalDate.now();
         }
-
         List<Room> availableRooms = roomRepository.findAll();
         List<Reservation> reservations = reservationRepository.findExistingReservationNative(checkInDate, checkOutDate);
 
@@ -39,7 +38,6 @@ public class ReportServiceImplementation implements ReportService {
             Room reservedRoom = reservation.getRoom();
             availableRooms.remove(reservedRoom);
         }
-
         return availableRooms;
     }
 
@@ -49,7 +47,7 @@ public class ReportServiceImplementation implements ReportService {
         Map<String, Integer> roomsBookedMap = new HashMap<>();
 
         for (Transaction transaction : transactions) {
-            Room room = transaction.getRoom();
+            Room room = transaction.getReservation().getRoom();
             String roomType = room.getRoomType();
             int roomsBooked = roomsBookedMap.getOrDefault(roomType, 0);
             roomsBookedMap.put(roomType, roomsBooked + 1);

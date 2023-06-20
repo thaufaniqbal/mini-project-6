@@ -31,7 +31,4 @@ public class Customer {
     @JsonIgnore
     private List<Reservation> reserveRooms;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Transaction> transactionList;
 }

@@ -1,17 +1,11 @@
 package id.co.indivara.hotel.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class GetAllAvailableRoomForm {
-    LocalDate checkInDate;
-    LocalDate checkOutDate;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
 }
