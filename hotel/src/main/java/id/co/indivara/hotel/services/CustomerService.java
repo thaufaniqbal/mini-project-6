@@ -5,7 +5,7 @@ import id.co.indivara.hotel.model.ReserveRoomForm;
 import id.co.indivara.hotel.model.ReserveRoomReceipt;
 import id.co.indivara.hotel.model.CustomerCheckInValidationForm;
 
-public interface TransactionService {
+public interface CustomerService {
     CustomerCheckInMessage checkIn (Long roomNumber, Integer roomToken);
     Boolean customerCheckInValidation(CustomerCheckInValidationForm customerCheckInValidationForm);
     Boolean checkOut(Integer roomToken);

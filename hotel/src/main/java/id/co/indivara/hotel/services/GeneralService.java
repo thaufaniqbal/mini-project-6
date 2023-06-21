@@ -4,9 +4,8 @@ import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
 import id.co.indivara.hotel.model.entity.Room;
 
 import java.util.List;
-import java.util.Map;
 
-public interface ReportService {
+public interface GeneralService {
     List<Room> getAvailableRooms(GetAllAvailableRoomForm getAllAvailableRoomForm);
-    Map<String, Integer> getHotelReport();
+    List<Room> getAllRooms();
 }

@@ -1,22 +1,21 @@
 package id.co.indivara.hotel.services.implementation;
 
-import id.co.indivara.hotel.model.CustomerCheckInMessage;
-import id.co.indivara.hotel.model.CustomerCheckInValidationForm;
-import id.co.indivara.hotel.model.ReserveRoomForm;
-import id.co.indivara.hotel.model.ReserveRoomReceipt;
+import id.co.indivara.hotel.model.*;
 import id.co.indivara.hotel.model.entity.*;
 import id.co.indivara.hotel.repositories.*;
-import id.co.indivara.hotel.services.TransactionService;
+import id.co.indivara.hotel.services.CustomerService;
+import id.co.indivara.hotel.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 @Service
-public class TransactionServiceImplementation implements TransactionService {
+public class CustomerServiceImplementation implements CustomerService {
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -48,7 +47,7 @@ public class TransactionServiceImplementation implements TransactionService {
         // find reservation by roomToken, isCheckIn = False, CheckInValidation = True
         Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndCheckInValidationTrue(customerCheckInValidationForm.getRoomToken());
         // check for customerCheckIn, if customer set "True" to customerCheckInValidationForm, and it will true. and save to transaction history
-        if (customerCheckInValidationForm.getIsCheckIn() && customerCheckInValidationForm.getCustomerId().equals(reservation.getCustomer().getId())) {
+        if (customerCheckInValidationForm.getIsCheckIn() && reservation.getRoom().equals(roomRepository.findByRoomNumber(customerCheckInValidationForm.getRoomNumber()))) {
             transactionRepository.save(Transaction.builder()
                     .checkIn(LocalDateTime.now())
                     .reservation(reservation)
@@ -153,4 +152,5 @@ public class TransactionServiceImplementation implements TransactionService {
                         checkInDate)
                 .build();
     }
+
 }
