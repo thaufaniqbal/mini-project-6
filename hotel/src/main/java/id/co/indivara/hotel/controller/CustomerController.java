@@ -20,29 +20,29 @@ public class CustomerController {
     GeneralService generalService;
     @PostMapping("/reserve/")
     public ResponseEntity<?> reserve(@RequestBody ReserveRoomForm reserveRoomForm) {
-        return ResponseEntity.ok().body(customerService.reserveRoom(reserveRoomForm));
+        return null;
     }
     @PostMapping("/checkin/{roomNumber}/{roomToken}")
     public ResponseEntity<?> checkIn(@PathVariable Long roomNumber, @PathVariable Integer roomToken){
-        return ResponseEntity.ok().body(customerService.checkIn(roomNumber, roomToken));
+        return null;
     }
 
     @PostMapping("/validation/")
     public ResponseEntity<?> customerValidationCheckIn(@RequestBody CustomerCheckInValidationForm customerCheckInValidationForm){
-        return ResponseEntity.ok().body(customerService.customerCheckInValidation(customerCheckInValidationForm));
+        return null;
     }
     @PutMapping("/checkout/{roomToken}")
     public ResponseEntity<?> checkOut(@PathVariable Integer roomToken){
-        return ResponseEntity.ok().body(customerService.checkOut(roomToken));
+        return null;
     }
 
     @GetMapping("/available-rooms")
     public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody GetAllAvailableRoomForm getAllAvailableRoomForm) {
-        return ResponseEntity.ok(generalService.getAvailableRooms(getAllAvailableRoomForm));
+        return null;
     }
     @GetMapping("/get-rooms")
     public ResponseEntity<List<Room>> getAllRooms() {
-        return ResponseEntity.ok(generalService.getAllRooms());
+        return null;
     }
 
 }

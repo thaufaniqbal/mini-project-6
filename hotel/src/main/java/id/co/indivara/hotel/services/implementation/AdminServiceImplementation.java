@@ -1,10 +1,7 @@
 package id.co.indivara.hotel.services.implementation;
 
 import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
-import id.co.indivara.hotel.model.entity.Customer;
-import id.co.indivara.hotel.model.entity.Reservation;
-import id.co.indivara.hotel.model.entity.Room;
-import id.co.indivara.hotel.model.entity.Transaction;
+import id.co.indivara.hotel.model.entity.*;
 import id.co.indivara.hotel.repositories.*;
 import id.co.indivara.hotel.services.AdminService;
 import id.co.indivara.hotel.services.GeneralService;
@@ -24,6 +21,8 @@ public class AdminServiceImplementation implements AdminService{
     TransactionRepository transactionRepository;
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    RoomStatusRepository roomStatusRepository;
 
     @Override
     public Map<String, Integer> getHotelReport() {
@@ -41,10 +40,11 @@ public class AdminServiceImplementation implements AdminService{
 
     @Override
     public Room createRoom(Room room) {
-        if (roomRepository.existbyRoomNumber(room.getRoomNumber())){
-            return null;
-        }
-        return roomRepository.save(room);
+            roomRepository.existsByRoomNumber(room.getRoomNumber()).orElseThrow(()-> new RuntimeException("sudah ada"));
+            Room savedRoom = roomRepository.save(room);
+            RoomStatus roomStatus = RoomStatus.builder().room(savedRoom).roomStatus(true).build();
+            roomStatusRepository.save(roomStatus);
+            return savedRoom;
     }
 
     @Override

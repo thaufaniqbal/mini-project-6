@@ -25,8 +25,13 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getHotelReport());
     }
     @PostMapping("/create-room/")
-    public ResponseEntity<?> createRoom(Room room) {
-        return ResponseEntity.ok(adminService.createRoom(room));
+    public ResponseEntity<Room> createRoom(@RequestBody Room room) {
+        Room createdRoom = adminService.createRoom(room);
+        if (createdRoom != null) {
+            return ResponseEntity.ok(createdRoom);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     public ResponseEntity<String> removeRoom(Long roomId) {

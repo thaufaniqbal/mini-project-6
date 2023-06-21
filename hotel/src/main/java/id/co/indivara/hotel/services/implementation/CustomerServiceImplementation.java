@@ -28,7 +28,6 @@ public class CustomerServiceImplementation implements CustomerService {
     @Autowired
     RoomStatusRepository roomStatusRepository;
 
-
     @Override
     public CustomerCheckInMessage checkIn(Long roomNumber, Integer roomToken) {
         // find reservation by roomToken, isCheckIn = False, CheckInValidation = False
