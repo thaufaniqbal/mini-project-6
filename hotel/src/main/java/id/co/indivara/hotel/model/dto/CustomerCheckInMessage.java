@@ -1,4 +1,4 @@
-package id.co.indivara.hotel.model;
+package id.co.indivara.hotel.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package id.co.indivara.hotel.services;
 
-import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
 import id.co.indivara.hotel.model.entity.Customer;
 import id.co.indivara.hotel.model.entity.Room;
 

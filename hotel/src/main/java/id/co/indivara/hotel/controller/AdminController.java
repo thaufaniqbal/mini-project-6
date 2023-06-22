@@ -1,6 +1,6 @@
 package id.co.indivara.hotel.controller;
 
-import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
+import id.co.indivara.hotel.model.dto.GetAllAvailableRoomForm;
 import id.co.indivara.hotel.model.entity.Customer;
 import id.co.indivara.hotel.model.entity.Room;
 import id.co.indivara.hotel.services.AdminService;
@@ -49,13 +49,12 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getCustomer(id));
     }
 
-
     public ResponseEntity<List<Customer>> getAllCustomer() {
         return ResponseEntity.ok(adminService.getAllCustomer());
     }
     public ResponseEntity<?> removeCustomer(Long customerId) {
         adminService.removeCustomer(customerId);
-        return ResponseEntity.ok("remove succes");
+        return ResponseEntity.ok("remove success");
     }
     @GetMapping("/available-rooms")
     public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody GetAllAvailableRoomForm getAllAvailableRoomForm) {
@@ -65,8 +64,4 @@ public class AdminController {
     public ResponseEntity<List<Room>> getAllRooms() {
         return ResponseEntity.ok(generalService.getAllRooms());
     }
-
-
-
-
 }

@@ -1,11 +1,13 @@
-package id.co.indivara.hotel.model;
+package id.co.indivara.hotel.model.dto;
 
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class GetAllAvailableRoomForm {
+public class ReserveRoomForm {
+    private Long customerId;
+    private Long roomId;;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 }

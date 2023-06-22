@@ -1,15 +1,13 @@
 package id.co.indivara.hotel.controller;
 
-import id.co.indivara.hotel.model.*;
+import id.co.indivara.hotel.model.dto.*;
 import id.co.indivara.hotel.model.entity.Room;
 import id.co.indivara.hotel.services.CustomerService;
 import id.co.indivara.hotel.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping ("/customer")
@@ -20,29 +18,43 @@ public class CustomerController {
     GeneralService generalService;
     @PostMapping("/reserve/")
     public ResponseEntity<?> reserve(@RequestBody ReserveRoomForm reserveRoomForm) {
-        return null;
+        ReserveRoomReceipt customerCheckInMessage = customerService.reserveRoom(reserveRoomForm);
+        if (customerCheckInMessage.getRoomToken() != null) {
+            return ResponseEntity.ok(customerCheckInMessage);
+        }
+        return ResponseEntity.badRequest().body(customerCheckInMessage);
     }
     @PostMapping("/checkin/{roomNumber}/{roomToken}")
     public ResponseEntity<?> checkIn(@PathVariable Long roomNumber, @PathVariable Integer roomToken){
-        return null;
+        CustomerCheckInMessage customerCheckInMessage = customerService.checkIn(roomNumber,roomToken);
+        if (customerCheckInMessage.getCustomerName()!=null){
+            return ResponseEntity.ok(customerCheckInMessage);
+        }
+        return ResponseEntity.badRequest().body(customerCheckInMessage);
     }
 
     @PostMapping("/validation/")
     public ResponseEntity<?> customerValidationCheckIn(@RequestBody CustomerCheckInValidationForm customerCheckInValidationForm){
-        return null;
+        if (customerService.customerCheckInValidation(customerCheckInValidationForm)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
     @PutMapping("/checkout/{roomToken}")
     public ResponseEntity<?> checkOut(@PathVariable Integer roomToken){
-        return null;
+        if (customerService.checkOut(roomToken)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/available-rooms")
     public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody GetAllAvailableRoomForm getAllAvailableRoomForm) {
-        return null;
+        return ResponseEntity.ok(generalService.getAvailableRooms(getAllAvailableRoomForm));
     }
     @GetMapping("/get-rooms")
     public ResponseEntity<List<Room>> getAllRooms() {
-        return null;
+        return ResponseEntity.ok(generalService.getAllRooms());
     }
 
 }

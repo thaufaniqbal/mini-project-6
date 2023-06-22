@@ -1,16 +1,17 @@
 package id.co.indivara.hotel.services.implementation;
 
-import id.co.indivara.hotel.model.*;
+import id.co.indivara.hotel.model.dto.CustomerCheckInMessage;
+import id.co.indivara.hotel.model.dto.CustomerCheckInValidationForm;
+import id.co.indivara.hotel.model.dto.ReserveRoomForm;
+import id.co.indivara.hotel.model.dto.ReserveRoomReceipt;
 import id.co.indivara.hotel.model.entity.*;
 import id.co.indivara.hotel.repositories.*;
 import id.co.indivara.hotel.services.CustomerService;
-import id.co.indivara.hotel.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 

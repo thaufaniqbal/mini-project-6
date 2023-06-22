@@ -1,6 +1,6 @@
 package id.co.indivara.hotel.services.implementation;
 
-import id.co.indivara.hotel.model.GetAllAvailableRoomForm;
+import id.co.indivara.hotel.model.dto.GetAllAvailableRoomForm;
 import id.co.indivara.hotel.model.entity.Reservation;
 import id.co.indivara.hotel.model.entity.Room;
 import id.co.indivara.hotel.repositories.ReservationRepository;
