@@ -7,6 +7,7 @@ import id.co.indivara.hotel.repositories.ReservationRepository;
 import id.co.indivara.hotel.repositories.RoomRepository;
 import id.co.indivara.hotel.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

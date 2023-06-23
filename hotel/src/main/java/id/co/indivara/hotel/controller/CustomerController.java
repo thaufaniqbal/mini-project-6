@@ -14,8 +14,6 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     CustomerService customerService;
-    @Autowired
-    GeneralService generalService;
     @PostMapping("/reserve/")
     public ResponseEntity<?> reserve(@RequestBody ReserveRoomForm reserveRoomForm) {
         ReserveRoomReceipt customerCheckInMessage = customerService.reserveRoom(reserveRoomForm);
@@ -48,13 +46,5 @@ public class CustomerController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/available-rooms")
-    public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody GetAllAvailableRoomForm getAllAvailableRoomForm) {
-        return ResponseEntity.ok(generalService.getAvailableRooms(getAllAvailableRoomForm));
-    }
-    @GetMapping("/get-rooms")
-    public ResponseEntity<List<Room>> getAllRooms() {
-        return ResponseEntity.ok(generalService.getAllRooms());
-    }
 
 }

@@ -17,8 +17,6 @@ import java.util.Map;
 public class AdminController {
     @Autowired
     AdminService adminService;
-    @Autowired
-    GeneralService generalService;
 
     @GetMapping("/hotel-report")
     public ResponseEntity<Map<String, Integer>> getHotelReport() {
@@ -55,13 +53,5 @@ public class AdminController {
     public ResponseEntity<?> removeCustomer(Long customerId) {
         adminService.removeCustomer(customerId);
         return ResponseEntity.ok("remove success");
-    }
-    @GetMapping("/available-rooms")
-    public ResponseEntity<List<Room>> getAvailableRooms(@RequestBody GetAllAvailableRoomForm getAllAvailableRoomForm) {
-        return ResponseEntity.ok(generalService.getAvailableRooms(getAllAvailableRoomForm));
-    }
-    @GetMapping("/get-rooms")
-    public ResponseEntity<List<Room>> getAllRooms() {
-        return ResponseEntity.ok(generalService.getAllRooms());
     }
 }
