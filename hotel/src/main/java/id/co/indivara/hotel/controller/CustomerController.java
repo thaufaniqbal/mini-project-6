@@ -1,13 +1,11 @@
 package id.co.indivara.hotel.controller;
 
 import id.co.indivara.hotel.model.dto.*;
-import id.co.indivara.hotel.model.entity.Room;
 import id.co.indivara.hotel.services.CustomerService;
-import id.co.indivara.hotel.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
 
 @RestController
 @RequestMapping ("/customer")
@@ -34,9 +32,9 @@ public class CustomerController {
     @PostMapping("/validation/")
     public ResponseEntity<?> customerValidationCheckIn(@RequestBody CustomerCheckInValidationForm customerCheckInValidationForm){
         if (customerService.customerCheckInValidation(customerCheckInValidationForm)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(customerService.customerCheckInValidation(customerCheckInValidationForm));
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(customerService.customerCheckInValidation(customerCheckInValidationForm));
     }
     @PutMapping("/checkout/{roomToken}")
     public ResponseEntity<?> checkOut(@PathVariable Integer roomToken){
