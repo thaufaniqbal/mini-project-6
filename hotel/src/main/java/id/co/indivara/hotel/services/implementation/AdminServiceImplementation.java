@@ -4,7 +4,6 @@ import id.co.indivara.hotel.model.entity.*;
 import id.co.indivara.hotel.repositories.*;
 import id.co.indivara.hotel.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -70,10 +69,9 @@ public class AdminServiceImplementation implements AdminService{
     }
 
     @Override
-    public ResponseEntity<?> removeCustomer(Long customerId) {
+    public void removeCustomer(Long customerId) {
         customerRepository.findById(customerId).orElse(null);
         customerRepository.deleteById(customerId);
-        return null;
     }
 
 }

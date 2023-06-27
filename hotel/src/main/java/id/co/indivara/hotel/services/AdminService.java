@@ -2,7 +2,6 @@ package id.co.indivara.hotel.services;
 
 import id.co.indivara.hotel.model.entity.Customer;
 import id.co.indivara.hotel.model.entity.Room;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,6 @@ public interface AdminService {
     //customer
     Customer getCustomer(Long id);
     List<Customer> getAllCustomer();
-    ResponseEntity<?> removeCustomer(Long customerId);
+    void removeCustomer(Long customerId);
 
 }

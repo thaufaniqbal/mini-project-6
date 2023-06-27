@@ -29,26 +29,27 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-    public ResponseEntity<String> removeRoom(Long roomId) {
+    @PutMapping("/remove-room/{roomId}")
+    public ResponseEntity<String> removeRoom(@PathVariable Long roomId) {
         adminService.removeRoom(roomId);
         return ResponseEntity.ok("remove success");
     }
 
-
-    public ResponseEntity<?> updateRoom(Long roomId, Room room) {
+    @PutMapping("/update-room/{roomId}")
+    public ResponseEntity<?> updateRoom(@PathVariable Long roomId, @RequestBody Room room) {
         return ResponseEntity.ok(adminService.updateRoom(roomId,room)) ;
     }
 
-
-    public ResponseEntity<?> getCustomer(Long id) {
-        return ResponseEntity.ok(adminService.getCustomer(id));
+    @GetMapping("/get-customer/{customerId}")
+    public ResponseEntity<?> getCustomer(@PathVariable Long customerId) {
+        return ResponseEntity.ok(adminService.getCustomer(customerId));
     }
-
+    @GetMapping("/get-customers")
     public ResponseEntity<List<Customer>> getAllCustomer() {
         return ResponseEntity.ok(adminService.getAllCustomer());
     }
-    public ResponseEntity<?> removeCustomer(Long customerId) {
+    @PutMapping("/remove-customer/{customerId}")
+    public ResponseEntity<?> removeCustomer(@PathVariable Long customerId) {
         adminService.removeCustomer(customerId);
         return ResponseEntity.ok("remove success");
     }

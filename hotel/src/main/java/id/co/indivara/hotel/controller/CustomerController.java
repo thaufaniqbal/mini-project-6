@@ -31,10 +31,11 @@ public class CustomerController {
 
     @PostMapping("/validation/")
     public ResponseEntity<?> customerValidationCheckIn(@RequestBody CustomerCheckInValidationForm customerCheckInValidationForm){
-        if (customerService.customerCheckInValidation(customerCheckInValidationForm)) {
-            return ResponseEntity.ok().body(customerService.customerCheckInValidation(customerCheckInValidationForm));
+        Boolean validation = customerService.customerCheckInValidation(customerCheckInValidationForm);
+        if (validation) {
+            return ResponseEntity.ok().body(validation);
         }
-        return ResponseEntity.badRequest().body(customerService.customerCheckInValidation(customerCheckInValidationForm));
+        return ResponseEntity.badRequest().body(validation);
     }
     @PutMapping("/checkout/{roomToken}")
     public ResponseEntity<?> checkOut(@PathVariable Integer roomToken){
