@@ -10,6 +10,6 @@ import java.time.LocalDate;
 public class ReserveRoomForm {
     private Long customerId;
     private Long roomId;
-    private LocalDate checkInDate;
+    private LocalDate checkInDatee;
     private LocalDate checkOutDate;
 }
