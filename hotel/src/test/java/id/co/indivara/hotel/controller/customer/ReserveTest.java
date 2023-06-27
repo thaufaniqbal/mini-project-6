@@ -3,8 +3,6 @@ package id.co.indivara.hotel.controller.customer;
 import id.co.indivara.hotel.controller.CustomerController;
 import id.co.indivara.hotel.model.dto.ReserveRoomForm;
 import id.co.indivara.hotel.model.dto.ReserveRoomReceipt;
-import id.co.indivara.hotel.model.entity.Customer;
-import id.co.indivara.hotel.model.entity.Room;
 import id.co.indivara.hotel.services.CustomerService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +26,7 @@ public class ReserveTest {
     @Test
     public void validReserveTest(){
         ReserveRoomForm reserveRoomForm = ReserveRoomForm.builder()
-                .customerId(1L)
+                .customerIddd(1L)
                 .roomId(1L)
                 .checkInDate(LocalDate.now())
                 .checkOutDate(LocalDate.now().plusDays(2))
@@ -51,7 +49,7 @@ public class ReserveTest {
     public void invalidReserveTest() {
 
         ReserveRoomForm reserveRoomForm = ReserveRoomForm.builder().
-                customerId(1L).
+                customerIddd(1L).
                 roomId(1L).
                 checkInDate(LocalDate.now().minusDays(5)).
                 checkOutDate(LocalDate.now().minusDays(3)).
