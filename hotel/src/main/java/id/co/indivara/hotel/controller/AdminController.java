@@ -40,7 +40,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.updateRoom(roomId,room)) ;
     }
 
-    @GetMapping("/get-customer/{customerIddd}")
+    @GetMapping("/get-customer/{customerId}")
     public ResponseEntity<?> getCustomer(@PathVariable Long customerId) {
         return ResponseEntity.ok(adminService.getCustomer(customerId));
     }
@@ -48,7 +48,7 @@ public class AdminController {
     public ResponseEntity<List<Customer>> getAllCustomer() {
         return ResponseEntity.ok(adminService.getAllCustomer());
     }
-    @PutMapping("/remove-customer/{customerIddd}")
+    @PutMapping("/remove-customer/{customerId}")
     public ResponseEntity<?> removeCustomer(@PathVariable Long customerId) {
         adminService.removeCustomer(customerId);
         return ResponseEntity.ok("remove success");

@@ -79,7 +79,7 @@ public class CustomerServiceImplementation implements CustomerService {
         LocalDate checkInDate = reserveRoomForm.getCheckInDate();
 
         Room room = findRoomById(reserveRoomForm.getRoomId());
-        Customer customer = findCustomerById(reserveRoomForm.getCustomerIddd());
+        Customer customer = findCustomerById(reserveRoomForm.getCustomerId());
 
         Optional<Reservation> existingReservation = findExistingReservation(room, checkInDate, reserveRoomForm.getCheckOutDate());
         if (existingReservation.isPresent()||!isValidCheckInDate(checkInDate)) {
