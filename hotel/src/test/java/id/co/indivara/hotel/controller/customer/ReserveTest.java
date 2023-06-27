@@ -26,7 +26,7 @@ public class ReserveTest {
     @Test
     public void validReserveTest(){
         ReserveRoomForm reserveRoomForm = ReserveRoomForm.builder()
-                .customerIddd(1L)
+                .customerId(1L)
                 .roomId(1L)
                 .checkInDate(LocalDate.now())
                 .checkOutDate(LocalDate.now().plusDays(2))
@@ -49,7 +49,7 @@ public class ReserveTest {
     public void invalidReserveTest() {
 
         ReserveRoomForm reserveRoomForm = ReserveRoomForm.builder().
-                customerIddd(1L).
+                customerId(1L).
                 roomId(1L).
                 checkInDate(LocalDate.now().minusDays(5)).
                 checkOutDate(LocalDate.now().minusDays(3)).
