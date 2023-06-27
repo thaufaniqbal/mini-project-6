@@ -76,7 +76,7 @@ public class CustomerServiceImplementation implements CustomerService {
     }
     @Override
     public ReserveRoomReceipt reserveRoom(ReserveRoomForm reserveRoomForm) {
-        LocalDate checkInDate = reserveRoomForm.getCheckInDatee();
+        LocalDate checkInDate = reserveRoomForm.getCheckInDate();
 
         Room room = findRoomById(reserveRoomForm.getRoomId());
         Customer customer = findCustomerById(reserveRoomForm.getCustomerId());

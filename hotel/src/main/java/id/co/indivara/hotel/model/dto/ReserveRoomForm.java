@@ -11,7 +11,7 @@ public class ReserveRoomForm {
     private Long customerId;
     private Long roomId;
 
-    private LocalDate checkInDatee;
+    private LocalDate checkInDate;
 
     private LocalDate checkOutDate;
 }

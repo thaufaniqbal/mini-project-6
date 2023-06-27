@@ -13,18 +13,18 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     @Query(value = "SELECT * FROM trx_reservations WHERE room_id = :room " +
-               "AND ((:checkInDatee >= check_in AND :checkInDatee <= check_out) "+
+               "AND ((:checkInDate >= check_in AND :checkInDate <= check_out) "+
                "OR (:checkOutDate >= check_in AND :checkOutDate <= check_out))", nativeQuery = true)
     Optional<Reservation> findExistingReservationNative(
             @Param("room") Room room,
-            @Param("checkInDatee") LocalDate checkInDate,
+            @Param("checkInDate") LocalDate checkInDate,
             @Param("checkOutDate") LocalDate checkOutDate
     );
 
-    @Query(value = "SELECT * FROM trx_reservations WHERE ((:checkInDatee >= check_in AND :checkInDatee <= check_out)"+
+    @Query(value = "SELECT * FROM trx_reservations WHERE ((:checkInDate >= check_in AND :checkInDate <= check_out)"+
             "OR (:checkOutDate >= check_in AND :checkOutDate <= check_out))", nativeQuery = true)
     List<Reservation> findExistingReservationNative(
-            @Param("checkInDatee") LocalDate checkInDate,
+            @Param("checkInDate") LocalDate checkInDate,
             @Param("checkOutDate") LocalDate checkOutDate
     );
 
