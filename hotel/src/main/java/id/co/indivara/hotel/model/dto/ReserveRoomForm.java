@@ -8,8 +8,8 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class ReserveRoomForm {
-    private Long customerIddd;
-    private Long roomId;;
+    private Long customerIdd;
+    private Long roomId;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 }
