@@ -18,7 +18,7 @@ public class AdminController {
 
     @PostMapping("/login")
     public String login(){
-        return "hello world";
+        return "hello thaufan";
     }
     @GetMapping("/hotel-report")
     public ResponseEntity<Map<String, Integer>> getHotelReport() {
