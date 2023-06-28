@@ -16,6 +16,10 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+    @PostMapping("/login")
+    public String login(){
+        return "hello world";
+    }
     @GetMapping("/hotel-report")
     public ResponseEntity<Map<String, Integer>> getHotelReport() {
         return ResponseEntity.ok(adminService.getHotelReport());
