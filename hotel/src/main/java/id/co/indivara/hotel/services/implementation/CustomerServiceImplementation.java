@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Random;
-
 @Service
 public class CustomerServiceImplementation implements CustomerService {
 
@@ -34,7 +32,7 @@ public class CustomerServiceImplementation implements CustomerService {
         // find reservation by roomToken, isCheckIn = False, CheckInValidation = False
         Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndCheckInValidationFalse(roomToken);
         // check date, if customer do checkIn, and is not match will return invalid checkIn request
-        if (dateCheckInChecker(reservation.getCheckIn()) && roomNumber.equals(reservation.getRoom().getRoomNumber())) {
+        if (Boolean.TRUE.equals(dateCheckInChecker(reservation.getCheckIn())) && roomNumber.equals(reservation.getRoom().getRoomNumber())) {
             reservation.setCheckInValidation(true);
             reservationRepository.save(reservation);
             return new CustomerCheckInMessage(reservation.getCustomer().getCustomerName(), "Check Notification");
@@ -47,7 +45,7 @@ public class CustomerServiceImplementation implements CustomerService {
         // find reservation by roomToken, isCheckIn = False, CheckInValidation = True
         Reservation reservation = reservationRepository.findByRoomTokenAndIsCheckInFalseAndCheckInValidationTrue(customerCheckInValidationForm.getRoomToken());
         // check for customerCheckIn, if customer set "True" to customerCheckInValidationForm, and it will true. and save to transaction history
-        if (customerCheckInValidationForm.getIsCheckIn() && reservation.getRoom().equals(roomRepository.findByRoomNumber(customerCheckInValidationForm.getRoomNumber()))) {
+        if (Boolean.TRUE.equals(customerCheckInValidationForm.getIsCheckIn()) && reservation.getRoom().equals(roomRepository.findByRoomNumber(customerCheckInValidationForm.getRoomNumber()))) {
             transactionRepository.save(Transaction.builder()
                     .checkIn(LocalDateTime.now())
                     .reservation(reservation)
@@ -126,7 +124,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     private int generateRoomToken(LocalDate checkInDate, Long roomNumber) {
         int date = checkInDate.getDayOfMonth();
-        return Integer.parseInt(date + String.valueOf(roomNumber) + new Random().nextInt(50));
+        return Integer.parseInt(date + String.valueOf(roomNumber) + 123);
     }
 
     private Reservation createReservation(Room room, Customer customer, LocalDate checkInDate,

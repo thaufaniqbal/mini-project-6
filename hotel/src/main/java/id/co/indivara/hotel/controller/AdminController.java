@@ -46,11 +46,15 @@ public class AdminController {
 
     @GetMapping("/get-customer/{customerId}")
     public ResponseEntity<?> getCustomer(@PathVariable Long customerId) {
-        return ResponseEntity.ok(adminService.getCustomer(customerId));
+        Customer customer = adminService.getCustomer(customerId);
+        if (customer != null){
+            return ResponseEntity.ok().body(customer);
+        }
+        return ResponseEntity.noContent().build();
     }
     @GetMapping("/get-customers")
     public ResponseEntity<List<Customer>> getAllCustomer() {
-        return ResponseEntity.ok(adminService.getAllCustomer());
+        return ResponseEntity.ok().body(adminService.getAllCustomer());
     }
     @PutMapping("/remove-customer/{customerId}")
     public ResponseEntity<?> removeCustomer(@PathVariable Long customerId) {

@@ -53,6 +53,7 @@ public class AdminServiceImplementation implements AdminService{
     @Override
     public Room updateRoom(Long roomId, Room room) {
         Room room1 = roomRepository.findById(roomId).orElse(null);
+        assert room1 != null;
         room1.setRoomNumber(room.getRoomNumber());
         room1.setRoomType(room.getRoomType());
         return roomRepository.save(room1);

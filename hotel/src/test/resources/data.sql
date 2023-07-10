@@ -1,0 +1,9 @@
+---- data.sql
+--INSERT INTO mst_customers (id, customer_address, customer_birth_date, customer_gender, customer_name, customer_phone_number, id_card_number) VALUES
+--  (1, 'tdp d/19', '2005-03-14', 'pria', 'thaufan iqbal', '895340003300', '32760899113218');
+--
+--INSERT INTO mst_rooms (id, room_number, room_type) VALUES
+--  (1, 1, 'Deluxe'),
+--  (2, 2, 'Deluxe');
+--
+--
